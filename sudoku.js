@@ -33,6 +33,8 @@ var row_size = 9;
 var column_size = 9;
 var box_width = 3;
 var box_height = 3;
+var box_rows = 3;
+var box_columns = 3;
 
 function is_valid_solution( grid )
 {
@@ -71,7 +73,7 @@ function column_split( grid )
 
 		for ( var j = 0; j < row_size; j++ )
 		{
-			columns[ i ] = columns[ i ].toString() + rows[ i ].charAt( j );
+			columns[ i ] = columns[ i ].toString( ) + rows[ i ].charAt( j );
 		};
 	};
 
@@ -83,19 +85,25 @@ function box_split( grid )
 	var boxes = {};
 	var rows = row_split( grid );
 
-	for ( var i = 0; i < 3; i++ )
+	for ( var i = 0; i < rows.length; i++ )
 	{
-
+		for ( var j = 0; j < box_rows; j++ )
+		{
+			for ( var k = 0; k < box_columns; k++ )
+			{
+				boxes[ ( j * box_rows ) + k ] += row[ i ].substring( k * box_width, box_width );
+			};
+		};
 	};
 
-	return true;
+	return boxes;
 }
 
 function valid_group( group )
 {
 	for ( var i = 0; i < group.length; i++ )
 	{
-		if ( group.indexOf( ( i + 1 ).toString() ) == -1 ) return false;
+		if ( group.indexOf( ( i + 1 ).toString( ) ) == -1 ) return false;
 	};
 
 	return true;
