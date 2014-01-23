@@ -28,7 +28,17 @@
 
 // 571843926893625174642179583425316798176982345938754612364297851289531467517468239
 
-// 851743926693825174142679583425316798976182345738954612364297851289531467517468239
+// 851743926
+// 693825174
+// 142679583
+// 425316798
+// 976182345
+// 738954612
+// 364297851
+// 289531467
+// 517468239
+// 
+//
 var row_size = 9;
 var column_size = 9;
 var box_width = 3;
@@ -73,7 +83,7 @@ function column_split( grid )
 
 		for ( var j = 0; j < row_size; j++ )
 		{
-			columns[ i ] = columns[ i ].toString( ) + rows[ i ].charAt( j );
+			columns[ i ] = columns[ i ].toString() + rows[ i ].charAt( j );
 		};
 	};
 
@@ -83,16 +93,24 @@ function column_split( grid )
 function box_split( grid )
 {
 	var boxes = {};
-	var rows = row_split( grid );
 
-	for ( var i = 0; i < rows.length; i++ )
+	for ( var i = 0; i < 9; i++ )
 	{
-		for ( var j = 0; j < box_rows; j++ )
+		boxes[ i ] = "";
+	};
+
+	var position = 0;
+
+	for ( var i = 0; i < box_rows; i++ )
+	{
+		for ( var j = 0; j < box_columns; j++ )
 		{
-			for ( var k = 0; k < box_columns; k++ )
+			for ( var k = 0; k < box_height; k++ )
 			{
-				boxes[ ( j * box_rows ) + k ] += row[ i ].substring( k * box_width, box_width );
+				boxes[ ( i * box_height ) + k ] += grid.substring( position, position + box_width );
+				position += box_width;
 			};
+
 		};
 	};
 
@@ -103,7 +121,7 @@ function valid_group( group )
 {
 	for ( var i = 0; i < group.length; i++ )
 	{
-		if ( group.indexOf( ( i + 1 ).toString( ) ) == -1 ) return false;
+		if ( group.indexOf( ( i + 1 ).toString() ) == -1 ) return false;
 	};
 
 	return true;
@@ -113,9 +131,9 @@ function valid_rows( grid )
 {
 	var rows = row_split( grid );
 
-	for ( var i = 0; i < rows.length; i++ )
+	for ( var i = 0; i < Object.keys( rows ).length; i++ )
 	{
-		if ( !valid_group( row ) ) return false;
+		if ( !valid_group( rows[ i ] ) ) return false;
 	};
 
 	return true;
@@ -126,9 +144,9 @@ function valid_columns( grid )
 {
 	var columns = column_split( grid );
 
-	for ( var i = 0; i < columns.length; i++ )
+	for ( var i = 0; i < Object.keys( columns ).length; i++ )
 	{
-		if ( !valid_group( column ) ) return false;
+		if ( !valid_group( columns[ i ] ) ) return false;
 	};
 
 	return true;
@@ -138,9 +156,9 @@ function valid_boxes( grid )
 {
 	var boxes = box_split( grid );
 
-	for ( var i = 0; i < boxes.length; i++ )
+	for ( var i = 0; i < Object.keys( boxes ).length; i++ )
 	{
-		if ( !valid_group( boxes ) ) return false;
+		if ( !valid_group( boxes[ i ] ) ) return false;
 	};
 
 	return true;
